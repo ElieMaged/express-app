@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const MongoClient = require('mongodb').MongoClient
-const port = 3000
+const PORT = 3000
 
 
 
@@ -55,7 +55,7 @@ if(champs[name]) {
 
 
 
-app.listen(port, () => {
+app.listen(process.env.PORT || PORT, () => {
     console.log('listening on 3000')
 })
 
