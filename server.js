@@ -43,15 +43,21 @@ res.sendFile(__dirname + '/index.html')
 
 
 app.get('/api/:champName', (req, res) => {
-const name = req.params.champName.toLowerCase();
-if(champs[name]) {
-    res.json(champs[name].title)
-} else {
-    res.json(champs['BOB'].title)
-}
-
-
+    const name = req.params.champName.toLowerCase();
+    champs[name] ? res.json(champs[name].ultimate) : res.json('bob')
+    // res.json(champs.ultimate)
 })
+
+
+
+// app.get('/api/:champName', (req, res) => {
+// const name = req.params.champName.toLowerCase();
+// if(champs[name]) {
+//     res.json(champs[name].title)
+// } else {
+//     res.json(champs['BOB'].title)
+// }
+// })
 
 
 
