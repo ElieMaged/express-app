@@ -2,6 +2,19 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000;
 const path = require('path')
+const MongoClient = require('mongodb').MongoClient
+const uri = 'mongodb+srv://Harambessj:Harambe100@persona-quotes.3a9om.mongodb.net/?retryWrites=true&w=majority&appName=Persona-Quotes'
+
+
+MongoClient.connect(uri, (err, client) => {
+    // ... do something here
+    console.log('Connected to Database')
+  })
+
+  
+
+// Make sure you place this before your CRUD handlers!
+app.use(express.urlencoded({ extended: true }))
 
 
 const champs = {
@@ -49,20 +62,17 @@ const champs = {
 }
 
 
-
 app.get('/', (req,res) => {
 res.sendFile(__dirname + '/index.html')
 })
 
-app.get('/api/:champName', (req,res) => {
-   let ch = req.params.champName;
-    res.json(champs[ch]) ? res.json(champs[ch]) : res.json(champs['unknown'])
+
+app.post('/quotes', (req,res) => {
+    console.log(req.body)
 })
 
 
-app.get('/about', (req,res) => {
-    res.sendFile(path.join(__dirname, 'public', 'about.html'))
-})
+
 
 
 app.listen(port, () => {
