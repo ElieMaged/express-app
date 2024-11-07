@@ -1,30 +1,53 @@
 const express = require('express')
-const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express()
-const port = process.env.PORT || 3000;
-const path = require('path')
-
+const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://Harambessj:Harambe100@quotes.vuxgr.mongodb.net/?retryWrites=true&w=majority&appName=quotes";
 
 
-  
-
-
-
-app.use(express.static(path.join(__dirname, 'public')))
-
-app.listen(3000, () => console.log('Server is running on port 3000!'))
-
-app.get('/quotes', (req,res) => {
-
+const client = new MongoClient(uri, {
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+      }
 })
 
 
+const db = client.db('got-quotes')
 
-app.get('/quotes/:name', (req,res) => {
-    console.log(req.params)
-    const name = req.params.name
-    res.json(posts.filter(prev => prev.name === name))
+const quotesCollection = db.collection('quotes')
+
+
+// app.post('/quotes', (req,res) => {
+//     console.log(req.body)
+//     res.redirect('/')
+// // 
+// })
+
+
+app.use(express.urlencoded({ extended: true }))
+
+
+app.listen(3000, () => {
+    console.log('Listening to 3000!')
+})
+
+app.get('/', (req,res) => {
+    res.sendFile(__dirname +'/public' + '/index.html')
+})
+
+app.post('/quotes', (req,res) => {
+    console.log(req.body);
+    const gotName = req.body.name;
+    const gotQuote = req.body.quote;
+    quotesCollection
+                .insertOne({'name':gotName, 'quote':gotQuote})
+                .then(result => {
+                    console.log(result)
+                })
+                .catch(error => console.error(error))
+                res.redirect('/')
+    res.json('HIIIII')
 })
 
 
