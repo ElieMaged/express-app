@@ -36,18 +36,33 @@ app.get('/', (req,res) => {
     res.sendFile(__dirname +'/public' + '/index.html')
 })
 
+
+
+// app.post('/quotes', (req,res) => {
+
+//     console.log(req.body);
+//     const gotName = req.body.name;
+//     const gotQuote = req.body.quote;
+
+// quotesCollection
+//                 .insertOne({'name':gotName, 'quote':gotQuote})
+//                 .then(result => {
+//                     console.log(result)
+//                     .catch(error => console.log(error))
+//                     res.redirect('/')
+//                 })
+// })
+
+
 app.post('/quotes', (req,res) => {
-    console.log(req.body);
-    const gotName = req.body.name;
-    const gotQuote = req.body.quote;
-    quotesCollection
-                .insertOne({'name':gotName, 'quote':gotQuote})
-                .then(result => {
-                    console.log(result)
-                })
-                .catch(error => console.error(error))
-                res.redirect('/')
-    res.json('HIIIII')
+const gotName = req.body.name;
+const gotQuote = req.body.quote;
+quotesCollection.insertOne({'name':gotName, 'quote':gotQuote})
+.then(result => {
+    console.log(result)
+})
+.catch(error => console.log(error))
+res.redirect('/')
 })
 
 
