@@ -48,7 +48,6 @@ app.post('/quotes', (req,res) => {
                 .catch(error => console.error(error))
                 res.redirect('/')
     res.json('HIIIII')
-    res.json('HIIIII')
 })
 
 
